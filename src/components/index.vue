@@ -61,6 +61,7 @@
           //当图片加载成功时候调用组件内部的refresh重新计算高度
           this.$refs.scroll.refresh()
           this.checkLoaded = true
+
         }
       }
     }
