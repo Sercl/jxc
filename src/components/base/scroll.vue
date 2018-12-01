@@ -6,6 +6,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
+
   export default {
     props: {
       probeType: {
@@ -24,7 +25,7 @@
     data() {
       return {}
     },
-    component: {BScroll},
+    component: {},
     mounted() {
       //初始化列表
       setTimeout(() => {
@@ -41,6 +42,7 @@
         //初始化BScroll列表滑动，参数1：dom，参数2：
         this.scroll = new BScroll(this.$refs.wrapper, {
           probeType: this.probeType,
+          //tap:"set_cart,changeMastDisplay"
           click: this.click
         })
       },
@@ -53,7 +55,10 @@
       },
       refresh() {
         //重新计算
-        this.scroll && this.scroll.refresh()
+        setTimeout(()=>{
+          this.scroll && this.scroll.refresh()
+        },500)
+
       }
     },
     // watch: {

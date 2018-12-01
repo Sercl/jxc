@@ -14,7 +14,7 @@
 
 <script type="text/ecmascript-6">
   import BScroll from 'better-scroll'
-  import {addClass} from '../../../common/dom'
+  import {addClass} from '../../common/dom'
 
   export default {
     props: {
@@ -80,6 +80,7 @@
       },
       _initDots() {
         this.dots = new Array(this.children.length)
+
       },
       _initSlider() {
         this.slider = new BScroll(this.$refs.slider, {
@@ -150,9 +151,9 @@
         width: 8px
         height: 8px
         border-radius: 50%
-        background: rgba(255,255,255,0.5);
+        background: rgba(220,230,236,1);
         &.active
           width: 20px
           border-radius: 5px
-          background: rgba(255,255,255,0.8);
+          background: rgba(132,155,255,1);
 </style>
