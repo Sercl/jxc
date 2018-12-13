@@ -19,7 +19,6 @@
     },
     components: {},
     created(){
-      //this.title=document.title
     },
     methods: {
       onBack(){

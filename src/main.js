@@ -6,6 +6,7 @@ import "./assets/css/index.styl"
 import ApiPlugin from './plugin/api'
 import wu from './plugin/wu/wu-ui/wu-ui'
 import './plugin/wu/wu-ui/wu-ui.css';
+import 'swiper/dist/css/swiper.css'
 
 Vue.use(ApiPlugin)
 Vue.config.productionTip = false

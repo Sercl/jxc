@@ -45,6 +45,9 @@
           //tap:"set_cart,changeMastDisplay"
           click: this.click
         })
+        this.scroll.on('beforeScrollStart', ()=>{
+          this.$emit('beforeScroll')
+        })
       },
       enable() {
         //如果为真则执行
@@ -58,7 +61,6 @@
         setTimeout(()=>{
           this.scroll && this.scroll.refresh()
         },500)
-
       }
     },
     // watch: {

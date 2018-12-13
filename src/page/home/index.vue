@@ -1,17 +1,19 @@
 <template>
   <div style="top:0" class="scroll">
-    <scroll ref="scroll"  class="scroll-content">
+    <scroll @beforeScroll="blur" ref="scroll"  class="scroll-content">
       <div>
         <div ref="banner" v-if="bannerList.length" class="slider-wrapper">
           <slider>
-            <div v-for="item in bannerList" :key="item">
-              <img class="needsclick" @load="loadImage()" :src="item" alt="">
+            <div v-for="(item, idnex) in bannerList" :key="idnex">
+              <a :href="item.linkUrl">
+                <img class="needsclick" @load="loadImage()" :src="item.imgUrl" alt="">
+              </a>
             </div>
           </slider>
         </div>
         <div>
           <div class="label">
-            <div class="label2">
+            <div @click="toTel" class="label2">
               <div class="label3">
                 <div><span>免费查询</span></div>
                 <div><span style="font-family: Microsoft YaHei">400-6659378</span></div>
@@ -34,12 +36,12 @@
         <!--输入框-->
         <div>
           <div class="input">
-            <div class="w">
-              <input class="iname" type="text" placeholder="请输入查询的商标名称" v-model="name">
+            <div class=" flex-h w">
+              <input class="iname" ref="inputName" type="text" style="font-size: 4px;border-right: none;" placeholder=" 请输入查询的商标名称" v-model="name">
             </div>
             <div class="flex-h w">
-              <input class="itel" type="number" placeholder="请输入您的手机号" v-model="mobile">
-              <div @click="onSubmit()" class="item-text">
+              <input class="itel" ref="inputMobile" type="number" style="border-right: none;font-size: 4px;" placeholder=" 请输入您的手机号" v-model="mobile">
+              <div @click="onSubmit()" class="item-text" style="margin-left: 0;font-size: 10px">
                 <div class="span">查询</div>
               </div>
             </div>
@@ -50,7 +52,7 @@
         <div ref="xbanner" v-if="xbannerList.length" class="slider-wrapper">
           <div style="height: 10px; background-color: #f2f3f9"></div>
           <slider>
-            <div v-for="item in xbannerList" :key="item">
+            <div v-for="(item, index) in xbannerList" :key="index">
               <img class="needsclick" @load="loadImage()" :src="item" alt="">
             </div>
           </slider>
@@ -69,13 +71,21 @@
   import Case from './component/case'
 
   export default {
-    data() {
+    data () {
       return {
         bannerList: [
-          require('../../assets/banner.png'),
-          require('../../assets/banner.png'),
-          require('../../assets/banner.png'),
-          require('../../assets/banner.png')
+          {
+            imgUrl:require('../../assets/banner.png'),
+            linkUrl:'#/brand-register'
+          },
+          {
+            imgUrl:require('../../assets/banner2.png'),
+            linkUrl:'#/brand-register'
+          },
+          {
+            imgUrl:require('../../assets/banner3.png'),
+            linkUrl:'#/brand-design'
+          }
         ],
         xbannerList: [
           require('../../assets/xbanner.png'),
@@ -90,13 +100,31 @@
     components: {
       Slider, Scroll, itemMenu, Case
     },
-    created() {
-
+    created () {
     },
-    mounted() {
+    mounted () {
       this.$refs.scroll.refresh()
     },
     methods: {
+      _scrollTo(index) {
+        if (!index && index !== 0) {
+          return
+        }
+        if (index < 0) {
+          index = 0
+        } else if (index > this.listHeight.length - 2) {
+          index = this.listHeight.length - 2
+        }
+        this.scrollY = -this.listHeight[index]
+        this.$refs.listview.scrollToElement(this.$refs.listGroup[index], 0)
+      },
+      blur(){
+        this.$refs.inputName.blur()
+        this.$refs.inputMobile.blur()
+      },
+      toTel(){
+        window.location.href = 'tel://4006659378'
+      },
       loadImage() {
         this.num += 1
         if (this.num === 5) {
@@ -104,16 +132,16 @@
         }
       },
       onSubmit() {
-        if(this.name==='' || this.mobile===''){
-          this.$wu.showToast('商标名称和手机号不能为空');
-          return
+        if(this.name =='' && this.mobile == ''){
+          this.$wu.showToast('商标名称或手机号不能全为空');
+          return false;
         }
         this.$api.caseSearch({case_name:this.name,mobile:this.mobile}).then((res)=>{
           if(res.code === 200) {
             if(res.result.length){
-              this.$router.push({path:'/caseDetails',query:{guid:res.result}})
+              this.$router.push({path:'/case-Details',query:{guid:res.result}})
             }else{
-              this.$wu.showToast('无搜索结果')
+              this.$wu.showToast('等待查询结果')
             }
           }else{
             this.$wu.showToast(res.msg)
@@ -134,7 +162,8 @@
     width 80%
     margin: 0 20px 0 20px
     .w
-      width 50%
+      width 100%
+      margin 0px
     .item-text
       display: flex;
       align-items: center;
@@ -143,17 +172,16 @@
       justify-content center
       background-color #ff9a00
       width 30%
-      height 127%
+      border-radius 2px
+      margin-left 1px
       .span
-        font-size 8px
+        font-size 15px
     .iname
       width 100%
-      height 100%
-      font-size 8px
+      font-size 15px
     .itel
       width 70%
-      height 100%
-      font-size 8px
+      font-size 15px
 
   .label
     background-color: #3c9efd
@@ -189,4 +217,12 @@
         font-family: 'YouYuan';
         font-size 17px
         color: #ffffff
+  input
+      border 1px solid #3c3c3c54
+      outline none
+      cursor pointer
+      font-size 6px
+      height:25px
+      border-radius 2px
+
 </style>

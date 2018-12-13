@@ -1,12 +1,12 @@
 <template>
   <div class="scroll">
-    <scroll ref="scroll" class="scroll-content">
+    <scroll @beforeScroll="blur" ref="scroll" class="scroll-content">
       <template-page>
         <div slot="header" style="position: relative;">
           <div class="flex-h header-search">
             <img @click="onSubmit()" src="../assets/icon/search.png" alt="">
             <div style="width: 82%;">
-              <input @keyup.enter="onSubmit()" v-model="name" placeholder="请输入商标名称" type="text">
+              <input ref="inputBrand" @keyup.enter="onSubmit()" v-model="name" placeholder="请输入商标名称" type="text">
             </div>
           </div>
 
@@ -51,6 +51,9 @@
       this.$refs.scroll.refresh()
     },
     methods: {
+      blur(){
+        this.$refs.inputBrand.blur()
+      },
       onSubmit() {
         if(this.name===''){
           this.$wu.showToast('请输入商标名称')
@@ -59,7 +62,7 @@
         this.$api.caseSearch({case_name:this.name}).then((res)=>{
           if(res.code === 200) {
             if(res.result.length){
-              this.$router.push({path:'/caseDetails',query:{guid:res.result}})
+              this.$router.push({path:'/case-Details',query:{guid:res.result}})
             }else{
               this.$wu.showToast('无搜索结果')
             }

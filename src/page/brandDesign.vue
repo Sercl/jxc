@@ -1,6 +1,6 @@
 <template>
   <div class="scroll">
-    <scroll ref="scroll" class="scroll-content">
+    <scroll @beforeScroll="blur" ref="scroll" class="scroll-content">
       <template-page>
         <img slot="header" width="100%" src="../assets/banner/brandDesign.png" alt="">
         <div class="main" slot="main">
@@ -9,11 +9,11 @@
             <div class="content-tle">
               <div>仅官方可见，请放心填写</div>
               <div class="flex-h content-input">
-                <input v-model="mobile" type="Number" placeholder="手机号码（用于专业顾问与您联系）">
+                <input ref="inputMobile" v-model="mobile" type="Number" placeholder="手机号码（用于专业顾问与您联系）">
               </div>
             </div>
             <div>
-              <input style="height: 30px;" v-model="name" type="text" placeholder="您的称呼">
+              <input ref="inputName" style="height: 30px;" v-model="name" type="text" placeholder="您的称呼">
             </div>
             <div @click="onSubmit()" class="content-button">预约咨询</div>
           </div>
@@ -43,6 +43,10 @@
       this.$refs.scroll.refresh()
     },
     methods: {
+      blur(){
+        this.$refs.inputName.blur()
+        this.$refs.inputMobile.blur()
+      },
       onSubmit(){
         if(this.name==='' || this.mobile===''){
           this.$wu.showToast('手机号和称呼不能为空')
@@ -54,6 +58,8 @@
           }else{
             this.$wu.showToast(res.msg)
           }
+          this.name=''
+          this.mobile=''
         })
       }
     }
@@ -100,6 +106,9 @@
   .content >div
     margin-top 18px
   .footers
+    z-index -1
     position absolute
     bottom 0
+    right 0
+    left 0
 </style>

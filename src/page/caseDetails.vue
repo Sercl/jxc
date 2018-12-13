@@ -1,7 +1,7 @@
 <template>
   <div class="scroll">
     <scroll v-if="caseDetail.length" ref="scroll" class="scroll-content">
-      <div id="case-detail">
+      <div id="case-detail" style="padding: 5px;">
         <div v-html="caseDetail">
         </div>
         <v-footer></v-footer>
@@ -41,6 +41,8 @@
 </script>
 
 <style lang="stylus">
+  template
+    color: #474747
   #case-detail p
     margin 0 15px 0 15px
 </style>

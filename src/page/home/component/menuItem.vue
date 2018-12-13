@@ -1,9 +1,9 @@
 <template>
   <div>
     <div class="flex-z items">
-      <div class="flex-h items-list" v-for="items in item" :key="items">
-        <div @click="toPage(item.route)" class="flex-z items-item" v-for="(item) in items"
-             :key="item">
+      <div class="flex-h items-list" v-for="(items,index) in item" :key="index">
+        <div @click="toPage(item.route)" class="flex-z items-item" v-for="(item, ind) in items"
+             :key="ind">
           <img width="30px" height="30px" :src=item.img>
           <span style="margin-top: 10px">{{item.name}}</span>
         </div>
@@ -74,9 +74,11 @@
 </script>
 
 <style scoped lang="stylus">
+
   .items
     margin 20px 20px 0 20px
     font-family 'YouYuan'
+    color #474747
 
   .items-item
     align-items center
