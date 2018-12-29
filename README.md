@@ -1,26 +1,18 @@
-# jxc
+## 项目演示
+![](http://jxc.weixy666.cn/jxc.png)
+### [演示地址](http://jxc.weixy666.cn/#/ "项目演示")
+## 运行示例
 
-## Project setup
-```
+``` bash
+# 安装依赖
 yarn install
-```
 
-### Compiles and hot-reloads for development
-```
+# 本地运行
 yarn run serve
-```
 
-### Compiles and minifies for production
-```
+# 生产环境打包
 yarn run build
-```
 
-### Run your tests
-```
-yarn run test
-```
-
-### Lints and fixes files
-```
-yarn run lint
+# 生产环境部署服务
+yarn run server
 ```
