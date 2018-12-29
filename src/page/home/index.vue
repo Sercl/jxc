@@ -37,10 +37,10 @@
         <div>
           <div class="input">
             <div class=" flex-h w">
-              <input class="iname" ref="inputName" type="text" style="font-size: 4px;border-right: none;" placeholder=" 请输入查询的商标名称" v-model="name">
+              <input class="iname" ref="inputName" type="text" style="border-right: none;" placeholder=" 请输入查询的商标名称" v-model="name">
             </div>
             <div class="flex-h w">
-              <input class="itel" ref="inputMobile" type="number" style="border-right: none;font-size: 4px;" placeholder=" 请输入您的手机号" v-model="mobile">
+              <input class="itel" ref="inputMobile" type="number" style="border-right: none;" placeholder=" 请输入您的手机号" v-model="mobile">
               <div @click="onSubmit()" class="item-text" style="margin-left: 0;font-size: 10px">
                 <div class="span">查询</div>
               </div>
@@ -127,7 +127,7 @@
       },
       loadImage() {
         this.num += 1
-        if (this.num === 5) {
+        if (this.num === 4) {
           this.$refs.scroll.refresh()
         }
       },
